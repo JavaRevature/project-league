@@ -51,15 +51,6 @@ public class SummonerChampionDAO implements SummonerChampionDAOInterface {
 
     @Override
     public int removeAllChampionFromSummoner(int summonerId) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            String sql = "DELETE FROM summoners_champions WHERE summoner_id_fk = ?;";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, summonerId);
-            return ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("SQL exception occurred");
-        }
         return -1;
     }
 }

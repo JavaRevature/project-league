@@ -16,7 +16,6 @@ public class Launcher {
         setup();
         //summonersTest();
         //championsTest();
-        summonersChampionsDAOTest();
     }
 
     public static void setup() {

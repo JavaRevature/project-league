@@ -13,7 +13,7 @@ public interface SummonerDAOInterface {
 
     int addSummoner(Summoner summoner);
 
-    int updateSummonerLevel(int level);
+    int updateSummonerLevel(Summoner summoner);
 
     int deleteSummoner(int summoner_id);
 

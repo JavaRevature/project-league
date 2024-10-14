@@ -7,5 +7,5 @@ public interface SummonerChampionDAOInterface {
     List<Champion> getChampionsBySummonerId(int summonerId);
     int addChampionForSummoner(int summonerId, int championId);
     int removeAllChampionFromSummoner(int summonerId);
-
+    
 }

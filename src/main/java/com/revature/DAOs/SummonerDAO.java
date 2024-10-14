@@ -51,17 +51,47 @@ public class SummonerDAO implements SummonerDAOInterface{
 
     @Override
     public int addSummoner(Summoner summoner) {
-        return 0;
+        try(Connection connection = ConnectionUtil.getConnection()){
+            String sql = "INSERT INTO summoners(summoner_name, summoner_level) VALUES(?,?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, summoner.getSummoner_name());
+            ps.setInt(2,summoner.getSummoner_level());
+            return ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("SQL exception caught");
+        }
+        return -1;
     }
 
     @Override
-    public int updateSummonerLevel(int level) {
-        return 0;
+    public int updateSummonerLevel(Summoner summoner) {
+        try(Connection connection = ConnectionUtil.getConnection()){
+            String sql = "UPDATE summoners SET summoner_level = ? WHERE summoner_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1,summoner.getSummoner_level());
+            ps.setInt(2,summoner.getSummoner_id());
+            return ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("SQL exception caught");
+        }
+        return -1;
     }
 
     @Override
     public int deleteSummoner(int summoner_id) {
-        return 0;
+        try(Connection connection = ConnectionUtil.getConnection()){
+            String sql = "DELETE FROM summoners WHERE summoner_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1,summoner_id);
+            return ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("SQL exception caught");
+        }
+        return -1;
     }
 
     Summoner mapResultSetToSummoner(ResultSet rs){

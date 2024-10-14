@@ -66,16 +66,4 @@ public class Champion {
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
-
-    @Override
-    public String toString() {
-        return "Champion{" +
-            "champion_id=" + champion_id +
-            ", champion_name='" + champion_name + '\'' +
-            ", attack=" + attack +
-            ", defense=" + defense +
-            ", magic=" + magic +
-            ", difficulty=" + difficulty +
-            '}';
-    }
 }

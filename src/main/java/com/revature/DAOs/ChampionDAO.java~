@@ -99,7 +99,7 @@ public class ChampionDAO implements ChampionDAOInterface {
             e.printStackTrace();
             System.out.println("SQL exception caught");
         }
-        return -1;
+        return 0;
     }
 
     private Champion mapResultSetToChampion(ResultSet resultSet) {

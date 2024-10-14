@@ -1,8 +1,11 @@
 package com.revature.utils;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 //This Class is where we manage and establish our database connection
 public class ConnectionUtil {
@@ -46,6 +49,19 @@ public class ConnectionUtil {
         //
         //  return DriverManager.getConnection(url, username, password);
 
+    }
+
+    public static void resetDatabase() {
+        try (Connection connection = ConnectionUtil.getConnection();
+            Statement stmt = connection.createStatement()) {
+
+            String sqlScript = new String(Files.readAllBytes(Paths.get("src/main/sql/league.sql")));
+            stmt.execute(sqlScript);
+            System.out.println("Database reset successful.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error while resetting the database.");
+        }
     }
 
 }

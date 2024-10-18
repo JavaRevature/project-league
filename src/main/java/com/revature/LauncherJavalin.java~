@@ -42,7 +42,13 @@ public class LauncherJavalin {
 
         app.post("/login", authController.loginHandler);
 
+        /*
+            We need create() to begin the instantiation of our javalin object
 
+            We need start() to begin the server
+
+            You can choose any port you want
+         */
 
 
 

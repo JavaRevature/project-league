@@ -44,8 +44,8 @@ public class Launcher {
 
         System.out.println("-----Add Summoner-----");
         Summoner summoner = new Summoner("New Summoner",1);
-        int numbersOfRowsAffected = summonerDAO.addSummoner(summoner);
-        System.out.println(numbersOfRowsAffected + " row was affected.");
+        //int numbersOfRowsAffected = summonerDAO.addSummoner(summoner);
+        //System.out.println(numbersOfRowsAffected + " row was affected.");
         System.out.println("-----New Summoner-----");
         summoners = summonerDAO.getAllSummoners();
         System.out.println(summoners.get(summoners.size()-1));
@@ -53,13 +53,13 @@ public class Launcher {
         System.out.println("----Update Summoner----");
         Summoner summonerToBeUpdated =summoners.get(summoners.size()-1);
         summonerToBeUpdated.setSummoner_level(200);
-        numbersOfRowsAffected = summonerDAO.updateSummonerLevel(summonerToBeUpdated);
-        System.out.println(numbersOfRowsAffected + " row was affected.");
+        //numbersOfRowsAffected = summonerDAO.updateSummonerLevel(summonerToBeUpdated);
+       // System.out.println(numbersOfRowsAffected + " row was affected.");
         summoners = summonerDAO.getAllSummoners();
         System.out.println(summoners.get(summoners.size()-1));
 
         System.out.println("----Delete Summoner----");
-        numbersOfRowsAffected = summonerDAO.deleteSummoner(summoners.size());
+        int numbersOfRowsAffected = summonerDAO.deleteSummoner(summoners.size());
         System.out.println(numbersOfRowsAffected + " row was affected.");
         summoners = summonerDAO.getAllSummoners();
         for(Summoner s: summoners){

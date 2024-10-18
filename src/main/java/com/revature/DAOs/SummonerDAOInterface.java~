@@ -14,7 +14,7 @@ public interface SummonerDAOInterface {
 
     Summoner addSummoner(Summoner summoner) throws SQLException;
 
-    int updateSummonerLevel(int summer_id,int summer_level);
+    Summoner updateSummonerLevel(int summer_id,int summer_level);
 
     int deleteSummoner(int summoner_id);
 

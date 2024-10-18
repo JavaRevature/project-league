@@ -22,9 +22,7 @@ public class ChampionController {
     };
 
     public Handler updateChampionHandler = ctx -> {
-        Champion champion = ctx.bodyAsClass(Champion.class);
-        championDAO.updateChampion(champion);
-        ctx.status(204);
-    };
+        
+    }
 
 }

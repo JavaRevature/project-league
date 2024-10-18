@@ -57,7 +57,6 @@ public class SummonerDAO implements SummonerDAOInterface{
                 PreparedStatement ps = connection.prepareStatement(sql);
                 ps.setString(1, summoner.getSummoner_name());
                 ps.setInt(2,summoner.getSummoner_level());
-                ps.setString(3,summoner.getSummoner_password());
                 ResultSet resultSet = ps.executeQuery();
                 if (resultSet.next()){
                     return mapResultSetToSummoner(resultSet);

@@ -21,7 +21,7 @@ public class AuthDAO {
             ps.setString(2,summoner_password);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                return new Summoner(rs.getInt("summoner_id"),rs.getString("summoner_name"),rs.getInt("summoner_level"),rs.getString("summoner_password"));
+                return new Summoner(rs.getInt("summoner_id"),rs.getString("summoner_name"),rs.getInt("summoner_level"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

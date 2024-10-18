@@ -14,9 +14,6 @@ public class LoginDTO {
         this.summoner_password = summoner_password;
     }
 
-    public LoginDTO() {
-    }
-
     public String getSummoner_name() {
         return summoner_name;
     }

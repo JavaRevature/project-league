@@ -14,7 +14,8 @@ CREATE TABLE champions(
 CREATE TABLE summoners(
 	summoner_id serial PRIMARY KEY,
 	summoner_name TEXT UNIQUE,
-	summoner_level int CHECK(summoner_level > 0)
+	summoner_level int CHECK(summoner_level > 0),
+	summoner_password TEXT
 );
 
 CREATE TABLE summoners_champions(
@@ -24,8 +25,9 @@ CREATE TABLE summoners_champions(
 );
 
 INSERT INTO champions(champion_name, attack,defense,magic,difficulty) VALUES('Aatrox',8,4,3,4),('Rengar',7,4,2,8),('Viego',6,4,2,5),('Hecarim',8,6,4,6),('Belveth',4,2,7,10);
+--\COPY champions(champion_name,attack,defense,magic,difficulty) FROM 'champion.csv' DELIMITER ',' CSV HEADER;
 
-INSERT INTO summoners(summoner_name, summoner_level) VALUES('Hari', 5),('Krish',1),('Kiddo A', 100);
+INSERT INTO summoners(summoner_name, summoner_level, summoner_password) VALUES('Hari', 5, 'password'),('Krish',1,'password1'),('Kiddo A', 100, 'password2');
 
 INSERT INTO summoners_champions(summoner_id_fk, champion_id_fk) VALUES(1,1),(1,2),(1,3),(1,4),(2,1),(2,3),(3,3);
 

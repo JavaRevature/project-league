@@ -42,7 +42,7 @@ public class SummonerController {
         }
         if(newSummoner.getSummoner_password().trim().isEmpty()){
             ctx.result("Summoner password are required");
-            ctx.status(400);
+            ctx.status()
         }
         try {
             Summoner summoner = summonerDAO.addSummoner(newSummoner);

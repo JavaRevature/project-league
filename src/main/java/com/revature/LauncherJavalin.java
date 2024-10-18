@@ -18,6 +18,14 @@ public class LauncherJavalin {
 
         //Before Handler This is what's checking for a not null session to see if a user is logged in.
 
+        app.before("/summoners/*",ctx ->{
+            if(AuthController.session == null){
+                ctx.status(401);
+                ctx.result("You must be logged in to access this resource");
+                throw new IllegalArgumentException("You must be logged in to access this resource");
+            }
+        });
+
         app.before("/summoners",ctx ->{
             if(AuthController.session == null){
                 ctx.status(401);
@@ -25,6 +33,24 @@ public class LauncherJavalin {
                 throw new IllegalArgumentException("You must be logged in to access this resource");
             }
         });
+
+        app.before("/champions",ctx ->{
+            if(AuthController.session == null){
+                ctx.status(401);
+                ctx.result("You must be logged in to access this resource");
+                throw new IllegalArgumentException("You must be logged in to access this resource");
+            }
+        });
+
+        app.before("/champions/*",ctx ->{
+            if(AuthController.session == null){
+                ctx.status(401);
+                ctx.result("You must be logged in to access this resource");
+                throw new IllegalArgumentException("You must be logged in to access this resource");
+            }
+        });
+
+
 
         app.exception(IllegalArgumentException.class,(e,ctx) -> {
             ctx.status(401);
@@ -39,6 +65,16 @@ public class LauncherJavalin {
         app.get("/champions/{id}", championController.getChampionByIdHandler);
 
         app.patch("/summoners/{id}", summonerController.updateSummonerLevelHandler);
+
+        app.delete("/summoners/{id}", summonerController.deleteSummonerHandler);
+
+        app.get("/champions", championController.getAllChampionHandler);
+
+        app.patch("/champions", championController.updateChampionHandler);
+
+        app.delete("/champions/{id}", championController.deleteChampionHandler);
+
+        app.post("/champions", championController.addChampionHandler);
 
         app.post("/login", authController.loginHandler);
 

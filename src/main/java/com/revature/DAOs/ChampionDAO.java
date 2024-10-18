@@ -52,35 +52,45 @@ public class ChampionDAO implements ChampionDAOInterface {
     }
 
     @Override
-    public int addChampion(Champion champion) {
+    public int addChampion(Champion champion) throws SQLException {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String sql = "INSERT INTO champions(champion_name, attack, defense, magic, difficulty) VALUES (?, ?, ?, ?, ?);";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, champion.getChampion_name());
-            ps.setInt(2, champion.getAttack());
-            ps.setInt(3, champion.getDefense());
-            ps.setInt(4, champion.getMagic());
-            ps.setInt(5, champion.getDifficulty());
-            return ps.executeUpdate();
+            if(!checkIfChampionExists(champion.getChampion_name())) {
+                String sql = "INSERT INTO champions(champion_name, attack, defense, magic, difficulty) VALUES (?, ?, ?, ?, ?) RETURNING champion_id;";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, champion.getChampion_name());
+                ps.setInt(2, champion.getAttack());
+                ps.setInt(3, champion.getDefense());
+                ps.setInt(4, champion.getMagic());
+                ps.setInt(5, champion.getDifficulty());
+                ResultSet resultSet = ps.executeQuery();
+                if(resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+                else {
+                    throw new SQLException("Champion name already exists");
+                }
+            }
+            else {
+                throw new SQLException("Champion name already exists");
+            }
         }catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("SQL exception caught");
+            throw new SQLException("Champion name already exists");
         }
-        return -1;
     }
 
     @Override
     public int updateChampion(Champion champion) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String sql = "UPDATE champions SET champion_name = ?, attack = ?, defense = ?, magic = ?, difficulty = ? WHERE champion_id = ?;";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, champion.getChampion_name());
-            ps.setInt(2, champion.getAttack());
-            ps.setInt(3, champion.getDefense());
-            ps.setInt(4, champion.getMagic());
-            ps.setInt(5, champion.getDifficulty());
-            ps.setInt(6, champion.getChampion_id());
-            return ps.executeUpdate();
+                String sql = "UPDATE champions SET champion_name = ?, attack = ?, defense = ?, magic = ?, difficulty = ? WHERE champion_id = ?;";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, champion.getChampion_name());
+                ps.setInt(2, champion.getAttack());
+                ps.setInt(3, champion.getDefense());
+                ps.setInt(4, champion.getMagic());
+                ps.setInt(5, champion.getDifficulty());
+                ps.setInt(6, champion.getChampion_id());
+                return ps.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
             System.out.println("SQL exception caught");
@@ -117,5 +127,21 @@ public class ChampionDAO implements ChampionDAOInterface {
             System.out.println("SQL exception caught");
     }
         return null;
+    }
+
+    private Boolean checkIfChampionExists(String champion_name) {
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            String sql = "SELECT * FROM champions WHERE champion_name = ?;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, champion_name);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("SQL exception caught");
+        }
+        return false;
     }
 }

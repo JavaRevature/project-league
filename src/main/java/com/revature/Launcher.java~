@@ -59,7 +59,7 @@ public class Launcher {
         System.out.println(summoners.get(summoners.size()-1));
 
         System.out.println("----Delete Summoner----");
-        numbersOfRowsAffected = summonerDAO.deleteSummoner(summoners.size());
+        int numbersOfRowsAffected = summonerDAO.deleteSummoner(summoners.size());
         System.out.println(numbersOfRowsAffected + " row was affected.");
         summoners = summonerDAO.getAllSummoners();
         for(Summoner s: summoners){
@@ -82,7 +82,7 @@ public class Launcher {
 
         System.out.println("----Add Champion----");
         Champion champion = new Champion("New Champion",1,1,1,1);
-        int numbersOfRowsAffected = championDAO.addChampion(champion);
+        //int numbersOfRowsAffected = championDAO.addChampion(champion);
         System.out.println(numbersOfRowsAffected + " row was affected.");
         System.out.println("----New Champion----");
         champions = championDAO.getAllChampion();

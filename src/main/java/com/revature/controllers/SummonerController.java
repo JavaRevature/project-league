@@ -69,4 +69,11 @@ public class SummonerController {
         }
     };
 
+    public Handler deleteSummonerHandler = ctx -> {
+        Integer id = Integer.parseInt(ctx.pathParam("id"));
+        int rowsDeleted = summonerDAO.deleteSummoner(id);
+        ctx.result("Deleted " + rowsDeleted + " rows");
+        ctx.status(200);
+    };
+
 }

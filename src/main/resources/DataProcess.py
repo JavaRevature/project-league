@@ -20,6 +20,6 @@ with open(csv_file, mode='w', newline='') as file:
     # Write champion information
     for champion, details in champions.items():
         info = details["info"]
-        writer.writerow([champion, info["attack"], info["defense"], info["magic"], info["difficulty"]])
+        writer.writerow(['(' + '\'' + champion + '\'' , str(info["attack"]), str(info["defense"]),str(info["magic"]),str(info["difficulty"])+')'])
 
 print(f"Champion information has been written to {csv_file}")

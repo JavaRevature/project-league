@@ -35,7 +35,7 @@ public class SummonerChampionDAO implements SummonerChampionDAOInterface {
     }
 
     @Override
-    public int addChampionForSummoner(int summonerId, int championId) {
+    public int addChampionForSummoner(int summonerId, int championId) throws SQLException {
         try (Connection connection = ConnectionUtil.getConnection()) {
             String sql = "INSERT INTO summoners_champions (summoner_id_fk, champion_id_fk) VALUES (?, ?);";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -43,10 +43,8 @@ public class SummonerChampionDAO implements SummonerChampionDAOInterface {
             ps.setInt(2, championId);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("SQL exception occurred");
+            throw new SQLException("Champion already owned by summoner;");
         }
-        return -1;
     }
 
     @Override

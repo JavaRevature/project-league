@@ -2,6 +2,7 @@ package com.revature;
 
 import com.revature.controllers.AuthController;
 import com.revature.controllers.ChampionController;
+import com.revature.controllers.SummonerChampionController;
 import com.revature.controllers.SummonerController;
 import com.revature.utils.ConnectionUtil;
 import io.javalin.Javalin;
@@ -11,6 +12,7 @@ public class LauncherJavalin {
     public static void main(String[] args) {
         SummonerController summonerController = new SummonerController();
         ChampionController championController = new ChampionController();
+        SummonerChampionController summonerChampionController = new SummonerChampionController();
         AuthController authController = new AuthController();
         ConnectionUtil.resetDatabase();
         //Typical Javalin Setup Syntax
@@ -27,6 +29,14 @@ public class LauncherJavalin {
         });
 
         app.before("/summoners",ctx ->{
+            if(AuthController.session == null){
+                ctx.status(401);
+                ctx.result("You must be logged in to access this resource");
+                throw new IllegalArgumentException("You must be logged in to access this resource");
+            }
+        });
+
+        app.before("/summoners-champions",ctx ->{
             if(AuthController.session == null){
                 ctx.status(401);
                 ctx.result("You must be logged in to access this resource");
@@ -75,6 +85,12 @@ public class LauncherJavalin {
         app.delete("/champions/{id}", championController.deleteChampionHandler);
 
         app.post("/champions", championController.addChampionHandler);
+
+        app.get("/summoners-champions", summonerChampionController.getChampionsBySummonerIdHandler);
+
+        app.delete("/summoners-champions", summonerChampionController.deleteChampionForSummonerHandler);
+
+        app.post("/summoners-champions/{championId}", summonerChampionController.addChampionForSummonerHandler);
 
         app.post("/login", authController.loginHandler);
 
